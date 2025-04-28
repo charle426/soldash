@@ -83,7 +83,7 @@ export default function SolanaPriceCharts() {
   }, [date, tokenInfo.address])
   return (
     <section className="w-full">
-      <Card className="w-full lg:ml-4">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle className="mb-4"><Link className="flex gap-2" href={`/tokens?address=${tokenInfo.address}`}>${tokenInfo.symbol} Chart</Link></CardTitle>
           <CardDescription>
@@ -182,8 +182,8 @@ export default function SolanaPriceCharts() {
             </AreaChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter className="flex justify-between items-start">
-          <div className="flex flex-col w-full mt-3 items-start gap-2 ml-3 text-sm">
+        <CardFooter className="flex w-full sm:flex-row flex-col gap-2 justify-between items-start">
+          <div className="flex flex-col w-full mt-3 items-start gap-2 md:ml-3 text-sm">
             <div className="grid gap-2">
               <div className="flex items-center gap-2 font-medium leading-none">
                 {
@@ -219,7 +219,7 @@ export default function SolanaPriceCharts() {
               )}  </div>
           </div>
           </div>
-          <div className="flex flex-col w-full gap-2 justify-end items-end text-sm">
+          <div className="flex flex-col w-full gap-2 md:justify-end md:items-end text-sm">
           <div className="text-gray-500 font-medium text-sm flex gap-2">
             <div>Current Price</div>
             {tokenInfo.price ? (<div>{tokenInfo.price}</div>) : (<div>--</div>)}

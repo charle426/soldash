@@ -12,11 +12,15 @@ import {
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { TokenContext, useTokenContext } from "@/components/custom/context";
+import { useTokenContext } from "@/components/custom/context";
+import { useParams } from "next/navigation";
 export default function Page() {
     const [sortBy, setSortBy] = useState("market_cap")
     const [pageNum, setPageNum] = useState(1)
     const { tokenInfo, setTokenInfo } = useTokenContext()
+
+  
+
     useEffect(() => {
         setTokenInfo(prev => ({ ...prev, url: `https://pro-api.solscan.io/v2.0/token/list?sort_by=${sortBy}&page=${pageNum}&page_size=20`, urlName: "tokens" }))
     }, [sortBy, pageNum])

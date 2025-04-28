@@ -24,10 +24,9 @@ import { toast } from "sonner";
 import formatUSD from "./formatUSD";
 
 
-export default function TrendingToken(props : { setSortBy: React.Dispatch<React.SetStateAction<string>>, sortBy: string, pageNum: number}) {
+export default function TokenSm() {
     const [trendingToken, setTrendingToken] = useState<any>([])
     const { setTokenInfo, tokenInfo } = useTokenContext()
-    const [errToggle, setErrToggle] = useState<boolean>(false)
     const SOLSCAN_API_KEY = process.env.NEXT_PUBLIC_SOLSCAN_API_KEY || ""
     const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     
@@ -134,27 +133,26 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
         fetchedTokens()
 
 
-    }, [tokenInfo.urlName, tokenInfo.url, props.sortBy, props.pageNum]) // refresh data when sortBy or pageNum changes
+    }, [tokenInfo.urlName, tokenInfo.url,]) // refresh data when sortBy or pageNum changes
 
     // Frontend
     return (
         <div className="w-full">
             <div className="gap-2 flex justify-end">
-                <Button variant={tokenInfo.urlName == "tokens" ? "default" : "outline"} className="mb-2" onClick={() => setTokenInfo(prev => ({...prev, urlName: "tokens", url: `https://pro-api.solscan.io/v2.0/token/list?sort_by=${props.sortBy}&page=1&page_size=20` }))}>
+                <Button variant={tokenInfo.urlName == "tokens" ? "default" : "outline"} className="mb-2" onClick={() => setTokenInfo(prev => ({...prev, urlName: "tokens", url: `https://pro-api.solscan.io/v2.0/token/list?sort_by=market_cap&page=1&page_size=20` }))}>
                     <span className="text-sm">Tokens</span>
                 </Button>
-                <Button variant={tokenInfo.urlName == "trending" ? "default" : "outline"} onClick={() => setTokenInfo(prev => ({...prev, name: "trending", url: "https://pro-api.solscan.io/v2.0/token/trending?limit=20" }))}>
+                <Button variant={tokenInfo.urlName == "trending" ? "default" : "outline"} onClick={() => setTokenInfo(prev => ({...prev, urlName: "trending", url: "https://pro-api.solscan.io/v2.0/token/trending?limit=20" }))}>
                     <span className="text-sm">Trending Tokens</span>
                 </Button>
             </div>
-            <Table className="relative font-medium *:text-[0.8em]">
+            <Table className="relative font-medium *:text-[0.8em] w-full">
                 <TableHeader className="">
                     <TableRow className="">
                         <TableHead>Token</TableHead>
-                        <TableHead>Symbol</TableHead>
                         <TableHead>Holders</TableHead>
                         <TableHead className="">Price</TableHead>
-                        <TableHead className="text-right ">Market Cap</TableHead>
+                        <TableHead className="">Market Cap</TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -184,7 +182,7 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
 
                             return (
 
-                                <TableBody className={tokenInfo.address === tokens.address ? "rounded-2xl m-2 cursor-pointer divide-y odd:bg-blue-200 even:bg-blue-200" : "m-2 divide-y odd:bg-slate-100 even:bg-white"}
+                                <TableBody className={tokenInfo.address === tokens.address ? "w-full rounded-2xl m-2 cursor-pointer divide-y odd:bg-blue-200 even:bg-blue-200" : "w-full m-2 divide-y odd:bg-slate-100 even:bg-white"}
                                     onClick={() => {
                                         setTokenInfo({
                                             address: tokens.address || "",
@@ -232,16 +230,15 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
                                             <TooltipProvider>
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
-                                                        <span className="underline cursor-pointer">{tokens.name}</span>
+                                                        <span className="underline cursor-pointer">{tokens.symbol}</span>
                                                     </TooltipTrigger>
                                                     <TooltipContent className="w-fit p-1 rounded-lg">
-                                                        <span className="flex flex-col gap-1 justify-center items-center"><span>{tokens.symbol}</span> <span>{tokens.address}</span></span>
+                                                        <span className="flex flex-col gap-1 justify-center items-center"><span>{tokens.name}</span> <span>{tokens.address}</span></span>
                                                     </TooltipContent>
                                                 </Tooltip>
                                             </TooltipProvider>
 
                                         </TableCell>
-                                        <TableCell className="">{tokens.symbol}</TableCell>
                                         <TableCell className="">
                                             {tokenInfo.address === tokens.address ?  <Link href={`/tokens/${tokens.address}`} className="text-blue-500 underline
                                             
@@ -268,8 +265,10 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
                                                 {tokens.price_change_24h !== null ? formatPrice(tokens.price_change_24h) : "0"}%
                                             </span>
                                         </TableCell>
-                                        <TableCell className="text-right">{tokens.market_cap !== null ? formatUSD(tokens.market_cap) : "N/A"}</TableCell>
-                                    </TableRow>
+                                        <TableCell className="">
+                                            {tokens.market_cap ?  <span>{formatUSD(tokens.market_cap)}</span> : <span>N/A</span>}
+                                        </TableCell>
+                                         </TableRow>
                                 </TableBody>
 
                             )
