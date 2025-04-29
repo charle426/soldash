@@ -23,7 +23,7 @@ export default function Page() {
       url: `https://pro-api.solscan.io/v2.0/token/list?sort_by=${sortBy}&page=${pageNum}&page_size=20`,
       urlName: "tokens",
     }));
-  }, [sortBy, pageNum]);
+  }, [sortBy, pageNum, setTokenInfo]);
   return (
     <section className="px-4 py-4">
       <div className="flex flex-col items-start justify-between">

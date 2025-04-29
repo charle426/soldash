@@ -350,7 +350,7 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
       setTransferData(allTokens)
     }
 
-  }, [address, tokenInfo.address])
+  }, [address, tokenInfo.address, SOLSCAN_API_KEY])
   return (
     <div className="mb-10 p-3">
       <div className="flex items-end justify-end mb-5">

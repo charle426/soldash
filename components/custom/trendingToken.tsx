@@ -147,7 +147,7 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
         fetchedTokens()
 
 
-    }, [tokenInfo.urlName, tokenInfo.url, props.sortBy, props.pageNum]) // refresh data when sortBy or pageNum changes
+    }, [tokenInfo.urlName, tokenInfo.url, props.sortBy, props.pageNum, SOLSCAN_API_KEY]) // refresh data when sortBy or pageNum changes
 
     // Frontend
     return (

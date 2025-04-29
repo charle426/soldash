@@ -53,15 +53,6 @@ export default function SolanaPriceCharts() {
     to: new Date(),
   })
 
-//    useEffect(() => {
-//   if (tokenInfo?.created_time) {
-//     setDate({
-//       from: new Date(tokenInfo.created_time * 1000),
-//       to: new Date(),
-//     });
-//   }
-// }, [tokenInfo]);
-
   useEffect(() => {
     const options = {
       method: "GET",
@@ -80,7 +71,7 @@ export default function SolanaPriceCharts() {
       .catch((err) => {
         console.error("Error fetching chain info:", err)
       })
-  }, [date, tokenInfo.address])
+  }, [date, tokenInfo.address, SOLSCAN_API_KEY])
   return (
     <section className="w-full">
       <Card className="w-full">

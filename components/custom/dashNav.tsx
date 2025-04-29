@@ -26,7 +26,7 @@ export default function DashNav() {
      axios.request(requestOptions)
         .then(response => setChainData(response.data.data))
         .catch(err => console.error(err));
-   }, [])
+   }, [SOLSCAN_API_KEY])
        
     return(
         <div className="mb-10 p-3">

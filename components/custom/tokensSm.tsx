@@ -146,7 +146,7 @@ export default function TokenSm() {
     }
 
     fetchedTokens();
-  }, [tokenInfo.urlName, tokenInfo.url]); // refresh data when sortBy or pageNum changes
+  }, [tokenInfo.urlName, tokenInfo.url, SOLSCAN_API_KEY]); // refresh data when sortBy or pageNum changes
 
   // Frontend
   return (
