@@ -16,6 +16,16 @@ import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/toolti
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import formatUSD from "@/components/custom/formatUSD";
 
+type AccountDetails = {
+  account: null,
+              lamports: null,
+              type: null,
+              executable: null,
+              owner_program: null,
+              rent_epoch: null,
+              is_oncurve: null
+}
+
 type TokenHolder = {
   account: string | null,
   lamports: number | null,
@@ -32,7 +42,6 @@ type TokenHolder = {
   account_address: string | null,
   account_label: string | null,
   account_icon: string | null,
-  account_tags: any,
 }
 
 type TokenTransfer = {
@@ -50,13 +59,11 @@ type TokenTransfer = {
     account_address: string,
     account_label: string | null,
     account_icon: string | null,
-    account_tags: any,
   },
   to_account: {
     account_address: string,
     account_label: string | null,
     account_icon: string | null,
-    account_tags: any,
   }
 
 }
