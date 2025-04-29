@@ -6,11 +6,10 @@ import { use, useEffect, useState } from "react"
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import axiosInstance from "@/lib/axiosClient"
-import { LucideClipboardCopy, LucideCopy } from "lucide-react"
+import { LucideCopy } from "lucide-react"
 import { toast } from "sonner"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { AvatarFallback } from "@radix-ui/react-avatar"
-import { format } from "date-fns/format"
 import { formatDistanceToNow } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"

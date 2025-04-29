@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useTokenContext } from "@/components/custom/context";
-import { useParams } from "next/navigation";
 export default function Page() {
     const [sortBy, setSortBy] = useState("market_cap")
     const [pageNum, setPageNum] = useState(1)

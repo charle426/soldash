@@ -4,12 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
     TableRow,
-    TableFooter,
 } from "@/components/ui/table"
 import { Skeleton } from "../ui/skeleton"
 import axiosInstance from "@/lib/axiosClient"
@@ -27,7 +25,6 @@ import formatUSD from "./formatUSD";
 export default function TrendingToken(props : { setSortBy: React.Dispatch<React.SetStateAction<string>>, sortBy: string, pageNum: number}) {
     const [trendingToken, setTrendingToken] = useState<any>([])
     const { setTokenInfo, tokenInfo } = useTokenContext()
-    const [errToggle, setErrToggle] = useState<boolean>(false)
     const SOLSCAN_API_KEY = process.env.NEXT_PUBLIC_SOLSCAN_API_KEY || ""
     const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     
