@@ -365,7 +365,7 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
             holderData.length > 0 ?
               holderData.map((data: TokenHolder, index: number) =>
               (
-                <TableBody className="font-medium p-5 text-sm divide-y ">
+                <TableBody className="font-medium p-5 text-sm divide-y" key={index}>
                   <TableRow>
                     <TableCell className="py-3">{data.rank}</TableCell>
                     <TableCell className="flex relative">
@@ -428,9 +428,9 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
 
           {
             transferData?.length > 0 ? (
-              transferData.map((data) => {
+              transferData.map((data, index) => {
                 return (
-                  <TableBody key={data.trans_id}>
+                  <TableBody key={index}>
                     <TableRow>
 
                       <TableCell className="py-3">
