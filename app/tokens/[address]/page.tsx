@@ -17,13 +17,20 @@ import { TooltipContent } from "@radix-ui/react-tooltip";
 import formatUSD from "@/components/custom/formatUSD";
 
 type AccountDetails = {
-  account: null,
-              lamports: null,
-              type: null,
-              executable: null,
-              owner_program: null,
-              rent_epoch: null,
-              is_oncurve: null
+  address: string,
+  amount: number,
+  rank: number,
+  decimals: number,
+  owner_program: string | null,
+  rent_epoch: number | null,
+  is_oncurve: boolean | null,
+  owner: string | "",
+  type: string,
+  account_address: string,
+    account_label: string | null,
+    account_icon: string | null,
+    account_type: string | null
+
 }
 
 type TokenHolder = {
@@ -42,6 +49,7 @@ type TokenHolder = {
   account_address: string | null,
   account_label: string | null,
   account_icon: string | null,
+  account_type: string | null
 }
 
 type TokenTransfer = {
@@ -76,10 +84,9 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
   const { tokenInfo } = useTokenContext()
   const [holderData, setHolderData] = useState<TokenHolder[]>([])
   const [transferData, setTransferData] = useState<TokenTransfer[]>([])
-  const [transferHolder, setTransferHolder] = useState<"holder" | "transfer">("transfer")
+  const [transferHolder, setTransferHolder] = useState<"holder" | "transfer">("holder")
   const [supplyPrice, setSupplyPrice] = useState<{ supply: number, price: number, symbol: string, icon:  string}>()
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  console.log(transferData)
 
   useEffect(() => {
     const transferoptions = {
@@ -136,10 +143,10 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
         console.error("Error fetching chain info:", err)
       })
 
-    async function accountDetails(data: any) {
+    async function accountDetails(data: AccountDetails[]) {
       // Check account details for each token
       const metaData = await Promise.all(
-        data.map(async (token: any) => {
+        data.map(async (token: AccountDetails) => {
           if (!token.address) {
             console.warn("Token missing address:", token);
             return {
@@ -205,9 +212,9 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
 
     }
 
-    async function getAccountDetails(data: any) {
+    async function getAccountDetails(data: TokenHolder[]) {
       const accountData = await Promise.all(
-        data.map(async (token: any) => {
+        data.map(async (token: TokenHolder) => {
           if (!token.address) {
             console.warn("Token missing address:", token);
             return {
@@ -229,7 +236,6 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
                 },
               }
             )
-            console.log(res.data.data)
             // return the account details for each holder
             return {
               ...token,
@@ -263,9 +269,9 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
       setHolderData(allTokens)
     }
 
-    async function getTransferDetails(data: any) {
+    async function getTransferDetails(data: TokenTransfer[]) {
       const accountData = await Promise.all(
-        data.map(async (token: any) => {
+        data.map(async (token: TokenTransfer) => {
           if (!token.from_address || !token.to_address) {
             console.warn("Token missing from_address or to_addresss:", token);
             return {
@@ -355,10 +361,10 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
       </div>
       {transferHolder === "holder" ? (
         <Table className="p-5">
-          <TableHeader className="">
             <TableCaption className="font-medium flex">
               Top 20 whales on {supplyPrice?.symbol}
             </TableCaption>
+          <TableHeader className="">
             <TableRow className="">
               <TableHead className="w-[100px]">Rank</TableHead>
               <TableHead>Account Owner</TableHead>
@@ -374,7 +380,7 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
                 <TableBody className="font-medium p-5 text-sm divide-y" key={index}>
                   <TableRow>
                     <TableCell className="py-3">{data.rank}</TableCell>
-                    <TableCell className="flex relative">
+                    <TableCell className="flex items-center gap-1 relative">
                       {data.account_icon ? (
                         <Avatar>
                           <AvatarImage src={data.account_icon} />
@@ -397,7 +403,7 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
               ))
               : (
                 skeletonArray.map((data) => {
-                  return (<TableBody>
+                  return (<TableBody key={data}>
                     <TableRow>
                       <TableCell className=""><Skeleton className="w-30 h-4" /></TableCell>
                       <TableCell className=""><Skeleton className="w-15 h-4" /></TableCell>

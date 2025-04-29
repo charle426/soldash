@@ -16,7 +16,6 @@ interface TokenInfo {
     url?: string;
     urlName?: string | null;
     volume_24h?: number | null;
-    [key: string]: any; // optional: allows flexibility
   }
   
   interface TokenContextProps {

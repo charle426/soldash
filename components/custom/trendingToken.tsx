@@ -22,8 +22,24 @@ import { toast } from "sonner";
 import formatUSD from "./formatUSD";
 
 
+type Tokens = {
+    logoURI: string | null,
+    price: number| null,
+    price_change_24h: number | null,
+    holder: number | null,
+    supply: number | null,
+    created_time: number | null;
+    market_cap_rank: number | null;
+    market_cap: number | null;
+    symbol: string | null;
+    address : string | null,
+    name: string | "",
+    volume_24h : number | null
+  };
+
+
 export default function TrendingToken(props : { setSortBy: React.Dispatch<React.SetStateAction<string>>, sortBy: string, pageNum: number}) {
-    const [trendingToken, setTrendingToken] = useState<any>([])
+    const [trendingToken, setTrendingToken] = useState<Tokens[]>([])
     const { setTokenInfo, tokenInfo } = useTokenContext()
     const SOLSCAN_API_KEY = process.env.NEXT_PUBLIC_SOLSCAN_API_KEY || ""
     const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -48,9 +64,9 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
 
 
             // Fetch metadata for each token because the API does not return metadata for all tokens
-            async function getMetaData(data: any) {
+            async function getMetaData(data: Tokens[]) {
                 const metaData = await Promise.all(
-                    data.map(async (token: any) => {
+                    data.map(async (token: Tokens) => {
                         if (!token.address) {
                             console.warn("Token missing address:", token);
                             return {
@@ -177,7 +193,7 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
                     ) : (
 
 
-                        trendingToken.map((tokens: any, index: number) => {
+                        trendingToken.map((tokens: Tokens, index: number) => {
 
                             return (
 

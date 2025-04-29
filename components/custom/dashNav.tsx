@@ -4,16 +4,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Skeleton } from "../ui/skeleton";
 import axios from "axios";
 
-interface chainDataType  {
+type chainDataType  = {
     currentEpoch: number
     blockHeight: number
     absoluteSlot: number
     transactionCount: number
-}[]
+}
 export default function DashNav() {
-    const [chainData, setChainData] = useState<chainDataType | any>([])
+    const [chainData, setChainData] = useState<chainDataType>()
     const SOLSCAN_API_KEY = process.env.NEXT_PUBLIC_SOLSCAN_API_KEY || ""
-    console.log(chainData)
     // Fetch chain data from Solscan API
    useEffect(() => {
     const requestOptions = {
@@ -41,7 +40,7 @@ export default function DashNav() {
                     </TableRow>
                 </TableHeader>
             {
-            chainData.blockHeight ? ( 
+            chainData ? ( 
                     <TableBody className="font-medium text-sm">
                         <TableRow>
                             <TableCell className="">{chainData.currentEpoch}</TableCell>
