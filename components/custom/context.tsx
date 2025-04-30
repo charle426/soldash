@@ -14,7 +14,7 @@ interface TokenInfo {
     market_cap?: number | null;
     market_cap_rank?: number | null;
     url?: string;
-    urlName?: string | null;
+    urlName?: "tokens" | "trending";
     volume_24h?: number | null;
   }
   

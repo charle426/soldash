@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import formatUSD from "@/components/custom/formatUSD";
+import { formatPrice } from "@/components/custom/formatNumbers";
 
 type AccountDetails = {
   address: string,
@@ -390,12 +391,12 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
 
                       11 <div className="flex justify-end items-end">{data.type ? (<span className="text-[0.5rem] h-3 px-0.5 w-fit rounded-xl bg-slate-200">{data.type}</span>) : (<span></span>)}</div>
                     </TableCell>
-                    <TableCell className="">{data.amount}</TableCell>
+                    <TableCell className="">{data.amount} ${supplyPrice.symbol}</TableCell>
                     <TableCell className=""> {data.amount && supplyPrice?.supply
                       ? ((Number(data.amount) / Number(supplyPrice?.supply)) * 100).toFixed(2) + '%'
                       : 'N/A'}</TableCell>
                     <TableCell className=""> {data.amount && supplyPrice?.price
-                      ? ((Number(data.amount) * Number(supplyPrice?.price))) + '$'
+                      ? (formatUSD((Number(data.amount) * Number(supplyPrice?.price)))) + '$'
                       : 'N/A'}</TableCell>
                   </TableRow>
 
@@ -446,7 +447,7 @@ export default function Page({ params }: { params: Promise<{ address: string }> 
                     <TableRow>
 
                       <TableCell className="py-3">
-                        <span className="">
+                        <span className="flex gap-1">
                           {data.trans_id.slice(0, 5) + "..." + data.trans_id?.slice(data.trans_id.length - 5, data.trans_id.length)}
                           <LucideCopy size={10} className="text-blue-600" fontSize={2} onClick={() => { navigator.clipboard.writeText(data.trans_id), toast("Signature Address Copied ✅") }} />
                         </span>

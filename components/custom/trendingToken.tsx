@@ -146,9 +146,9 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
 
         fetchedTokens()
 
-
     }, [tokenInfo.urlName, tokenInfo.url, props.sortBy, props.pageNum, SOLSCAN_API_KEY]) // refresh data when sortBy or pageNum changes
-
+   
+    
     // Frontend
     return (
         <div className="w-full">
@@ -156,7 +156,7 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
                 <Button variant={tokenInfo.urlName == "tokens" ? "default" : "outline"} className="mb-2" onClick={() => setTokenInfo(prev => ({...prev, urlName: "tokens", url: `https://pro-api.solscan.io/v2.0/token/list?sort_by=${props.sortBy}&page=1&page_size=20` }))}>
                     <span className="text-sm">Tokens</span>
                 </Button>
-                <Button variant={tokenInfo.urlName == "trending" ? "default" : "outline"} onClick={() => setTokenInfo(prev => ({...prev, name: "trending", url: "https://pro-api.solscan.io/v2.0/token/trending?limit=20" }))}>
+                <Button variant={tokenInfo.urlName == "trending" ? "default" : "outline"} onClick={() => setTokenInfo(prev => ({...prev, urlName: "trending", url: "https://pro-api.solscan.io/v2.0/token/trending?limit=20" }))}>
                     <span className="text-sm">Trending Tokens</span>
                 </Button>
             </div>
@@ -199,7 +199,8 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
 
                                 <TableBody className={tokenInfo.address === tokens.address ? "rounded-2xl m-2 cursor-pointer divide-y odd:bg-blue-200 even:bg-blue-200" : "m-2 divide-y odd:bg-slate-100 even:bg-white"}
                                     onClick={() => {
-                                        setTokenInfo({
+                                        setTokenInfo(prev => ({
+                                            ...prev,
                                             address: tokens.address || "",
                                             name: tokens.name || "",
                                             holder: tokens.holder || 0,
@@ -211,13 +212,14 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
                                             market_cap_rank: tokens.market_cap_rank || 0,
                                             symbol: tokens.symbol || "",
                                             volume_24h: tokens.volume_24h || 0,
-                                            price: tokens.price || 0,
-                                        });
+                                        }));
 
                                     }}
                                     onLoad={() => {
                                     if (index === 0 ){
-                                        setTokenInfo({
+                                        console.log({"onload index": tokens.name})
+                                        setTokenInfo(prev => ({
+                                            ...prev,
                                             address: tokens.address || "",
                                             name: tokens.name || "",
                                             holder: tokens.holder || 0,
@@ -229,7 +231,7 @@ export default function TrendingToken(props : { setSortBy: React.Dispatch<React.
                                             market_cap_rank: tokens.market_cap_rank || 0,
                                             symbol: tokens.symbol || "",
                                             volume_24h: tokens.volume_24h || 0,
-                                        });
+                                        }));
                                     }
                                     }}
                                     data-tooltip-id={tokens.address}
